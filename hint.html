@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<hmtl>
+    <head>
+        <link rel="stylesheet" href="styleW.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta charset="utf-8">
+
+        <h1 id="title">
+            Nancy's Weather App
+        </h1>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Declare the location variable
+            let location;
+
+            // Set an initial value for the location
+            location = "Richardson"
+
+            // Set an onclick event for the button
+            document.querySelector("button").onclick = () => {
+                // Create a new XMLHttpRequest object to make HTTP requests
+                let xmlhttp = new XMLHttpRequest();
+                
+                // Get the location from the user's input field
+                location = document.querySelector("#base").value;
+                console.log(location);
+
+                // Define a callback function to handle the response
+                xmlhttp.onreadystatechange = () => {
+
+                    // Check if the request is complete and successful
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                        // Parse the JSON response file received from the Server
+                        let result = JSON.parse(xmlhttp.responseText);
+                        // Log the entire response 
+                        console.log(result);
+
+                        //current temperature
+                        let current = result.main.temp;
+                        console.log(current);
+
+                        //weather description
+                        let desc = result.weather[0].description;
+                        console.log(desc);
+
+                        // Extract the minimum temperature in result
+                        let minumum = result.main.temp_min;
+                        // Log the minimum temperature
+                        // So you may check in Chrome/IE/Firefox if below variables are working properly
+                        console.log(minumum);
+
+                        //max
+                        let maximum = result.main.temp_max;
+                        console.log(maximum);
+
+                        //feels like
+                        let feels = result.main.feels_like;
+                        console.log(feels);
+
+                        //city
+                        let city = result.name;
+                        console.log(city);
+
+                        //country
+                        let country = result.sys.country;
+                        console.log(country);
+                        
+                        //weather icon
+                        let icon = result.weather[0].icon;
+                        console.log(icon);
+                        let iconLink = "https://openweathermap.org/img/wn/" + icon + "@2x.png"
+
+                        // Update the UIs to display the above minimum temperature in <p id="result"></p>
+                        document.querySelector("#result").innerHTML =
+                        "<br><span style=>Location: " + city + ", " + country + "</span><br><br>" +
+                        "<span style='font-weight: bold;'>Current Temperature: " + current + " F</span><br>" +
+                        "<img id='weather-icon' src='" + iconLink + "' alt='Weather Icon'><br>" +
+                        "<span>" + desc + "</span><br><br>" +
+                        "<span style='color: #CB576C;'>Maximum: " + maximum + " F</span><br>" +
+                        "<span style='color: #006DAA;'>Minumum: " + minumum + " F</span><br>" +
+                        "<span style='color: #4CCBAD;'>Feels Like: " + feels + " F</span><br>";
+                    }
+                };
+
+                // Open a GET request to the AccuWeather API with the specified location and API key
+                xmlhttp.open("GET", "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=fed5bfc001721e7c437225704041f2e5&units=imperial", true);
+                
+                // Send the request
+                xmlhttp.send();
+            };
+        });
+        </script>
+    </head>
+    <body>
+        <!-- Input field for entering the location -->
+        <input type="text" id="base" name="base" placeholder="Enter City or Zip Code">
+        <!-- Button to trigger the weather information retrieval -->
+        <button id="click">Click</button>
+        <!-- Paragraph to display the weather information -->
+        <p id="result"><span style="color: whitesmoke;"></span></p>
+    </body>
+</hmtl>

@@ -1,0 +1,36 @@
+* {
+    color: whitesmoke;
+    font-family: Arial, Verdana, Helvetica;
+    font-weight: bold;
+    text-align: center;
+    background-image: url(weather_background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: #cccccc;
+}
+
+#title {
+    font-size: 35px;
+}
+
+body {
+    font-size: 25px;
+}
+
+#base {
+    background-color: whitesmoke;
+    background-image: none;
+    color: black;
+    padding: 5px;
+    border-radius: 6px;
+}
+
+#click {
+    background-color: whitesmoke;
+    background-image: none;
+    color: black;
+    padding: 5px;
+    text-align: center;
+    border-radius: 6px;
+}

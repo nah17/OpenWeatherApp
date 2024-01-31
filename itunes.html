@@ -1,0 +1,101 @@
+
+
+<!--
+  itunes.html
+  
+  Gets the top 5 songs from iTunes API, and display the requested result in <div id='paragraphElement'>.
+   
+  Reference:
+  https://www.geeksforgeeks.org/javascript-jsonp/
+  https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/Searching.html#//apple_ref/doc/uid/TP40017632-CH5-SW1
+
+-->
+
+<!DOCTYPE html> 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--link href="css" rel="stylesheet" type="text/css" /-->
+    <style>
+        body {background-color: linen;}
+        div {width:180px;text-align: center;}     
+        a {
+            color:maroon; 
+            width:120px;
+            text-decoration: none; 
+            /* Hide the text. */ 
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font: italic bold 12px Georgia, serif;
+        }         
+        img {
+            padding: 0 30px;
+            margin: 0 10px;
+            background-color: #000;
+            display: block;
+        }
+    </style>
+    <script> 
+            function showResult(){
+            // Construct a URL request to the iTunes Store
+            var url = "https://itunes.apple.com/search?term="+ document.getElementById('artist').value +"&limit=5&callback=processData";
+    
+            // Create the script element dynamically through JavaScript  
+            var scriptElement = document.createElement("script"); 
+    
+            // Set the src and id attributes of the script element            
+            scriptElement.setAttribute("src", url); 
+            scriptElement.setAttribute("id", "itunes"); 
+            var oldScriptElement= document.getElementById("itunes"); 
+            
+            // Get the head element 
+            var head = document.getElementsByTagName("head")[0]; 
+            if(oldScriptElement == null) {                   
+                /* If there is no script element then append 
+                a new element to the head. */
+                head.appendChild(scriptElement); 
+                } 
+            else {            
+                /* If there is already a element in the head,  
+                then replace it with the new script element. */
+                head.replaceChild(scriptElement, oldScriptElement);  
+                } 
+                
+            }
+    
+            // Callback function that displays the results
+            function processData(myObj) { 
+            console.log(myObj); 
+            var para= document.getElementById("paragraphElement"); 
+            var trackName, img, previewUrl, price;
+            
+            para.innerHTML= null;
+            for(var i=0; i<myObj.resultCount; i++){ 
+                img = myObj.results[i].artworkUrl100;
+                previewUrl = myObj.results[i].previewUrl;
+                trackName = myObj.results[i].trackName;
+                para.innerHTML= para.innerHTML + "<a href=" + previewUrl + "><img src=" + img + "/></a><br><a href=" + previewUrl + ">" + trackName + "</a><br/><br/><br/>"; 
+                    // <img src=img /> 
+                }  
+            } 
+        </script> 
+</head>
+<body> 
+    <form>
+    Please input the artist's name: <input autocomplete="off" id="artist" type="text"/>
+    <br/><br/>
+    <button type="button" onclick="showResult()">Search</button>
+    </form>
+    <div id="paragraphElement"></div> 
+  
+    <!-- The server returns a call to the callback function 
+    (processData) that will handle the JSON data -->
+    
+      
+ <!-- Calling the iTunes API to search for Jack Johnson's songs and return  
+        the first five items >
+    <script src="https://itunes.apple.com/search?term=Rihanna&limit=5
+    &callback=processData"></script--> 
+</body> 
+</html>

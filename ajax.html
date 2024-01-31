@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+  function showHint(str) {
+    if (str.length == 0) {
+      document.querySelector("#txtHint").innerHTML = "";
+      return;
+    } else {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = handler;
+      xmlhttp.open("GET", "http://cosc19.us/gethint.php?q=" + str, true);
+      xmlhttp.send();
+    }
+  }
+  /**
+   * void handler() callback funtion
+   * Handles the Ajax response.
+   */
+  function handler() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.querySelector("#txtHint").innerHTML = this.responseText;
+    } else {
+      alert("Error with Ajax call!")
+    }
+  }
+</script>
+</head>
+<body>
+  <form action="">
+    <input type="text" id="fname" name="fname" placeholder="first name" onkeyup="showHint(this.value)">
+  </form>
+  <p id="txtHint"></p>
+</body>
+</html>

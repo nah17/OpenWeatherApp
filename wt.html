@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<hmtl>
+    <head>
+        <meta charset="utf-8">
+        <script>
+            const key = "UfMRxfjMGOvtbLVlR9B72WkF4TzRb6iD";
+
+            const getWeatherDetails = async (city) => {
+                const baseUrl = "https://dataservice.accuweather.com/forecasts/v1/daily/1day/";
+                const query = "?key=${apikey}&q=${city}";
+                const response = await fetch(baseUrl + queryParameters);
+                const data = await response.json();
+                return data[0];
+            }
+            const getWeather = async (locationKey) => {
+            const baseUrl = "https://dataservice.accuweather.com/currentconditions/v1/";
+            const queryParameters = "${locationKey}?apikey=${key}";
+            const response = await fetch(baseUrl + queryParameters);
+            const data = await response.json();
+            return data[0];
+            }
+
+            const cityForm = document.querySelector("form");
+
+            cityForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const city = cityForm.city.value.trim();
+                cityForm.reset();
+                updateCity(city)
+                .then((data) => updateUI(data))
+                .catch((err) => {
+                    alert("Something went wrong, please try later");
+                    console.log(err);
+                    throw new Error("Please enter the correct city name");
+                });
+            });
+
+        </script>
+    </head>
+    <body>
+        <!-- Input field for entering the location -->
+        <input type="text" id="base" name="base" placeholder="input location code">
+        <!-- Button to trigger the weather information retrieval -->
+        <button>Click</button>
+        <!-- Paragraph to display the weather information -->
+        <p id="result"><span style="color: red;"></span></p>
+    </body>
+</hmtl>

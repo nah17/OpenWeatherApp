@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS : jQuery Example</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script>
+        $( () => {
+            // Load the counter
+            let counter = localStorage.getItem('counter');
+            $('#demo').html(counter);
+            // A function binds to the button and increases the counter
+            $('button').on('click', () => {
+                counter++;
+                $('#demo').html(counter);
+                localStorage.setItem('counter', counter);
+            })
+        });
+    </script>
+</head>
+<body>
+    <button>Click</button>
+    <p id="demo"></p>
+</body>
+</html>
