@@ -1,5 +1,5 @@
-# OpenWeatherApp
-ITSS 4312 - Project 3: Weather App
+## OpenWeatherApp
+#### ITSS 4312 - Project 3: Weather App
 11/28/2023
 
 This project is a Weather App that gives users daily weather information based on location.
